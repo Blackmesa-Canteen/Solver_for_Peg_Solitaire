@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/shaotienlee/Desktop/Courses/DATA_STRUCTURE/Assginment/Assginment3/Assigment3_Code/src/layouts.h
+
+/Users/shaotienlee/Desktop/Courses/DATA_STRUCTURE/Assginment/Assginment3/Assigment3_Code/src/utils.c
+utils.h
+/Users/shaotienlee/Desktop/Courses/DATA_STRUCTURE/Assginment/Assginment3/Assigment3_Code/src/utils.h
+layouts.h
+/Users/shaotienlee/Desktop/Courses/DATA_STRUCTURE/Assginment/Assginment3/Assigment3_Code/src/layouts.h
+
+/Users/shaotienlee/Desktop/Courses/DATA_STRUCTURE/Assginment/Assginment3/Assigment3_Code/src/utils.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+unistd.h
+-
+termios.h
+-
+stdbool.h
+-
+stdint.h
+-
+time.h
+-
+signal.h
+-
+
