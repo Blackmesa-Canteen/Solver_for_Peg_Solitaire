@@ -71,8 +71,8 @@ void find_solution( state_t* init_state  ){
 	HashTable table;
     int remainingPegs = 0;
     int exploredNodes = 0;
-    int xPos = 0;
-    int yPos = 0;
+    int8_t xPos = 0;
+    int8_t yPos = 0;
     enum moves_e action;
 
 	// Choose initial capacity of PRIME NUMBER 
@@ -93,60 +93,43 @@ void find_solution( state_t* init_state  ){
 	while(!is_stack_empty()) {
 	    n = stack_top();
 	    stack_pop();
-	    exploredNodes++;
+	    expanded_nodes = ++exploredNodes;
 
+	    // found a better solution
 	    if (num_pegs(&(n->state)) < remainingPegs) {
 	        save_solution(n);
 	        remainingPegs = num_pegs(&(n->state));
 	    }
 
-//	    for (action = left; action <= down; action++) {
-//            if(is_legal_action(n, action)) {
-//                new_Node = applyAction(n, &(n->state.cursor),action);
-//                generated_nodes++;
-//
-//                if(won( &(new_Node->state) )) {
-//                    save_solution(new_Node);
-//                    remainingPegs = num_pegs(&new_Node->state);
-//                    return;
-//                }
-//
-//                if(new_Node->state->) {
-//                    stack_push(new_Node);
-//                }
-//            }
-//	    }
-
-        for(yPos = 0; yPos < SIZE; yPos++) {
-            for(xPos = 0; xPos < SIZE; xPos++) {
+        for(xPos = 0; xPos < SIZE; xPos++) {
+            for(yPos = 0; yPos < SIZE; yPos++) {
 
                 // only looks for peg points that can jump
                 if (n->state.field[xPos][yPos]==' '
-                ||n->state.field[xPos][yPos]=='.') continue;
+                    || n->state.field[xPos][yPos]=='.') continue;
 
                 for(action = left; action <= down; action++) {
+
+
                     n->state.cursor.x = xPos;
                     n->state.cursor.y = yPos;
 
                     if(can_apply(&(n->state), &(n->state.cursor), action)) {
 
                         new_Node = applyAction(n, &(n->state.cursor),action);
-
-                        if(!ht_contains(&table, new_Node->state.field)) {
-                            ht_insert(&table, new_Node->state.field, n->state.field);
-                        }
-
                         generated_nodes++;
 
                         if(won( &(new_Node->state) )) {
                             save_solution(new_Node);
-                            remainingPegs = num_pegs(&new_Node->state);
+                            remainingPegs = num_pegs(&(new_Node->state));
                             return;
                         }
 
-                        if(1 /*!ht_contains(&table, new_Node->state.field)*/) {
+                        if(!ht_contains(&table, new_Node->state.field)) {
                             stack_push(new_Node);
+                            ht_insert(&table, new_Node->state.field, n->state.field);
                         }
+
                     }
                 }
             }
