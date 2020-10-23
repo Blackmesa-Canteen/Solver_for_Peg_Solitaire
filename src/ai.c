@@ -122,7 +122,7 @@ void find_solution( state_t* init_state  ){
                             save_solution(new_Node);
                             remainingPegs = num_pegs(&(new_Node->state));
                             ht_destroy(&table);
-                            free_stack();
+                            //free_stack();
                             return;
                         }
 
@@ -138,7 +138,7 @@ void find_solution( state_t* init_state  ){
 
 	    if(exploredNodes >= budget) {
             ht_destroy(&table);
-            free_stack();
+            //free_stack();
 	        return;
 	    }
 
