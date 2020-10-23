@@ -104,6 +104,8 @@ void find_solution( state_t* init_state  ){
 
         for(xPos = 0; xPos < SIZE; xPos++) {
             for(yPos = 0; yPos < SIZE; yPos++) {
+//                if(n->state.field[xPos][yPos] == ' '
+//                ||n->state.field[xPos][yPos] == '.') continue;
 
                 for(action = left; action <= down; action++) {
                     selectionPos.x = xPos;
@@ -119,6 +121,8 @@ void find_solution( state_t* init_state  ){
                         if(won( &(new_Node->state) )) {
                             save_solution(new_Node);
                             remainingPegs = num_pegs(&(new_Node->state));
+                            ht_destroy(&table);
+                            free_stack();
                             return;
                         }
 
@@ -133,6 +137,8 @@ void find_solution( state_t* init_state  ){
         }
 
 	    if(exploredNodes >= budget) {
+            ht_destroy(&table);
+            free_stack();
 	        return;
 	    }
 
