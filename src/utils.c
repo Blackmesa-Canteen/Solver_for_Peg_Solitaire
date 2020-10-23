@@ -314,7 +314,6 @@ void print_solution(){
 
 void play_solution(){
 
-    cursorFixer();
     for(int i=0; i <= solution_size; i++){
         drawBoard(&(solution[i]));
         usleep(500000);
@@ -344,43 +343,5 @@ void play_solution(){
             drawBoard(&(solution[i]));
             usleep(500000);
         }
-    }
-}
-
-void cursorFixer() {
-    position_s tmp;
-    position_s tmp2;
-    for(int i=1; i < solution_size; i++){
-
-        //Reverse action
-        switch ( solution_moves[i] ) {
-                case up:
-                    solution[i].cursor.y = solution[i].cursor.y-2;
-                    solution[i].cursor.x = solution[i].cursor.x;
-                    break;
-                case down:
-                    solution[i].cursor.y = solution[i].cursor.y+2;
-                    solution[i].cursor.x = solution[i].cursor.x;
-                    break;
-                case left:
-                    solution[i].cursor.x = solution[i].cursor.x-2;
-                    solution[i].cursor.y = solution[i].cursor.y;
-                    break;
-                case right:
-                    solution[i].cursor.x = solution[i].cursor.x+2;
-                    solution[i].cursor.y = solution[i].cursor.y;
-                    break;
-            }
-    }
-
-    tmp.x = solution[0].cursor.x;
-    tmp.y = solution[0].cursor.y;
-    for(int i=1; i < solution_size; i++){
-        tmp2.x = tmp.x;
-        tmp2.y = tmp.y;
-        tmp.x = solution[i].cursor.x;
-        tmp.y = solution[i].cursor.y;
-        solution[i].cursor.x = tmp2.x;
-        solution[i].cursor.y = tmp2.y;
     }
 }

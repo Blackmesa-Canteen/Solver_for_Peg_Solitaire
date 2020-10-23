@@ -55,8 +55,10 @@ node_t* applyAction(node_t* n, position_s* selected_peg, move_t action ){
     new_node->depth = n->depth + 1;
 
 	new_node->move = action;
+    new_node->state.cursor.x = selected_peg->x;
+    new_node->state.cursor.y = selected_peg->y;
 
-	execute_move_t( &(new_node->state), selected_peg, action );
+	execute_move_t( &(new_node->state), &(new_node->state.cursor), action );
 	
 	return new_node;
 
@@ -104,25 +106,18 @@ void find_solution( state_t* init_state  ){
 
         for(xPos = 0; xPos < SIZE; xPos++) {
             for(yPos = 0; yPos < SIZE; yPos++) {
-//                if(n->state.field[xPos][yPos] == ' '
-//                ||n->state.field[xPos][yPos] == '.') continue;
-
                 for(action = left; action <= down; action++) {
                     selectionPos.x = xPos;
                     selectionPos.y = yPos;
-
                     if(can_apply(&(n->state), &selectionPos, action)) {
-                        n->state.cursor.x = selectionPos.x;
-                        n->state.cursor.y = selectionPos.y;
-
-                        new_Node = applyAction(n, &(n->state.cursor),action);
+                        new_Node = applyAction(n, &selectionPos,action);
                         generated_nodes++;
 
                         if(won( &(new_Node->state) )) {
                             save_solution(new_Node);
                             remainingPegs = num_pegs(&(new_Node->state));
                             ht_destroy(&table);
-                            //free_stack();
+                            free_stack();
                             return;
                         }
 
@@ -138,7 +133,7 @@ void find_solution( state_t* init_state  ){
 
 	    if(exploredNodes >= budget) {
             ht_destroy(&table);
-            //free_stack();
+            free_stack();
 	        return;
 	    }
 
