@@ -108,5 +108,6 @@ char* action_cstr(move_t move);
 void print_solution();
 void play_solution();
 
+void cursorFixer();
 
 #endif

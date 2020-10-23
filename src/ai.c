@@ -52,11 +52,11 @@ node_t* applyAction(node_t* n, position_s* selected_peg, move_t action ){
 	new_node = (node_t*) malloc(sizeof(node_t));
 	new_node->parent = n;
     copy_state(&(new_node->state), &(n->state));
-	new_node->state.cursor = *selected_peg;
-	new_node->depth = n->depth + 1;
+    new_node->depth = n->depth + 1;
+
 	new_node->move = action;
 
-	execute_move_t( &(new_node->state), &(new_node->state.cursor), action );
+	execute_move_t( &(new_node->state), selected_peg, action );
 	
 	return new_node;
 
@@ -73,6 +73,7 @@ void find_solution( state_t* init_state  ){
     int exploredNodes = 0;
     int8_t xPos = 0;
     int8_t yPos = 0;
+    position_s selectionPos;
     enum moves_e action;
 
 	// Choose initial capacity of PRIME NUMBER 
@@ -104,17 +105,13 @@ void find_solution( state_t* init_state  ){
         for(xPos = 0; xPos < SIZE; xPos++) {
             for(yPos = 0; yPos < SIZE; yPos++) {
 
-                // only looks for peg points that can jump
-                if (n->state.field[xPos][yPos]==' '
-                    || n->state.field[xPos][yPos]=='.') continue;
-
                 for(action = left; action <= down; action++) {
+                    selectionPos.x = xPos;
+                    selectionPos.y = yPos;
 
-
-                    n->state.cursor.x = xPos;
-                    n->state.cursor.y = yPos;
-
-                    if(can_apply(&(n->state), &(n->state.cursor), action)) {
+                    if(can_apply(&(n->state), &selectionPos, action)) {
+                        n->state.cursor.x = selectionPos.x;
+                        n->state.cursor.y = selectionPos.y;
 
                         new_Node = applyAction(n, &(n->state.cursor),action);
                         generated_nodes++;
@@ -140,61 +137,4 @@ void find_solution( state_t* init_state  ){
 	    }
 
 	}
-}
-
-int is_legal_action(node_t* n, move_t action) {
-    state_t* board = &(n->state);
-
-    int isLegal = 0;
-
-    switch(action) {
-        case left:
-            rotateBoard(board);
-            isLegal = canMoveUp(board);
-            rotateBoard(board);
-            rotateBoard(board);
-            rotateBoard(board);
-            break;
-        case right:
-            rotateBoard(board);
-            rotateBoard(board);
-            rotateBoard(board);
-            isLegal = canMoveUp(board);
-            rotateBoard(board);
-            break;
-        case up:
-            isLegal = canMoveUp(board);
-            break;
-        case down:
-            rotateBoard(board);
-            rotateBoard(board);
-            isLegal = canMoveUp(board);
-            rotateBoard(board);
-            rotateBoard(board);
-            break;
-        default:
-            isLegal = 0;
-    }
-
-    return isLegal;
-}
-
-int canMoveUp(state_t *board) {
-    int8_t x,y,(*field)[SIZE];
-
-    x = board->cursor.x;
-    y = board->cursor.y;
-    field = board->field;
-
-    if (y<2) return 0;
-    if (field[x][y-2]!='.') return 0;
-    if (field[x][y-1]!='o') return 0;
-    if (field[x][y-0]!='o') return 0;
-    field[x][y-2] = 'o';
-    field[x][y-1] = '.';
-    field[x][y-0] = '.';
-    //board->cursor.y = y-2;
-    //board->selected = false;
-
-    return 1;
 }
