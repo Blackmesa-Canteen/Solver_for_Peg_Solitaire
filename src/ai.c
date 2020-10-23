@@ -77,6 +77,7 @@ void find_solution( state_t* init_state  ){
     int8_t yPos = 0;
     position_s selectionPos;
     enum moves_e action;
+    node_list_t* graph_node_list = NULL;
 
 	// Choose initial capacity of PRIME NUMBER 
 	// Specify the size of the keys and values you want to store once 
@@ -91,6 +92,7 @@ void find_solution( state_t* init_state  ){
 	stack_push(n);
 	ht_insert(&table, n->state.field, n->state.field);
 	remainingPegs = num_pegs(&(n->state));
+    graph_node_list = insert_graph_node(n, graph_node_list);
 	
 	//FILL IN THE GRAPH ALGORITHM
 	while(!is_stack_empty()) {
@@ -111,13 +113,14 @@ void find_solution( state_t* init_state  ){
                     selectionPos.y = yPos;
                     if(can_apply(&(n->state), &selectionPos, action)) {
                         new_Node = applyAction(n, &selectionPos,action);
+                        graph_node_list = insert_graph_node(new_Node, graph_node_list);
                         generated_nodes++;
 
                         if(won( &(new_Node->state) )) {
                             save_solution(new_Node);
                             remainingPegs = num_pegs(&(new_Node->state));
                             ht_destroy(&table);
-                            free_stack();
+                            listFree(graph_node_list);
                             return;
                         }
 
@@ -133,7 +136,7 @@ void find_solution( state_t* init_state  ){
 
 	    if(exploredNodes >= budget) {
             ht_destroy(&table);
-            free_stack();
+            listFree(graph_node_list);
 	        return;
 	    }
 

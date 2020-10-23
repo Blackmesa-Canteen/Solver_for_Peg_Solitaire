@@ -53,6 +53,12 @@ struct node_s{
 
 typedef struct node_s node_t;
 
+typedef struct node_list{
+    node_t* graphNode;
+    struct node_list* next;
+} node_list_t;
+
+
 /**
  * GLOBAL VARIABLES
 */
@@ -107,5 +113,7 @@ void drawBoard(state_t *board);
 char* action_cstr(move_t move);
 void print_solution();
 void play_solution();
+node_list_t* insert_graph_node(node_t* node, node_list_t* list);
+void listFree(node_list_t* head);
 
 #endif
