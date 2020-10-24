@@ -8,6 +8,7 @@
 #include "hashtable.h"
 #include "stack.h"
 
+node_list_t* graph_node_list = NULL;
 
 void copy_state(state_t* dst, state_t* src){
 	
@@ -49,10 +50,14 @@ node_t* applyAction(node_t* n, position_s* selected_peg, move_t action ){
     node_t* new_node = NULL;
 
 	//FILL IN MISSING CODE
+	//allocate space for the new node
 	new_node = (node_t*) malloc(sizeof(node_t));
+	//points to parent
 	new_node->parent = n;
-    copy_state(&(new_node->state), &(n->state));
-    new_node->depth = n->depth + 1;
+    //copy the resent state: field and cursor
+	copy_state(&(new_node->state), &(n->state));
+    //depth + 1
+	new_node->depth = n->depth + 1;
 
 	new_node->move = action;
     new_node->state.cursor.x = selected_peg->x;
@@ -77,7 +82,6 @@ void find_solution( state_t* init_state  ){
     int8_t yPos = 0;
     position_s selectionPos;
     enum moves_e action;
-    node_list_t* graph_node_list = NULL;
 
 	// Choose initial capacity of PRIME NUMBER 
 	// Specify the size of the keys and values you want to store once 
@@ -92,6 +96,7 @@ void find_solution( state_t* init_state  ){
 	stack_push(n);
 	ht_insert(&table, n->state.field, n->state.field);
 	remainingPegs = num_pegs(&(n->state));
+	// store the address to the node in a linked list
     graph_node_list = insert_graph_node(n, graph_node_list);
 	
 	//FILL IN THE GRAPH ALGORITHM
@@ -112,20 +117,22 @@ void find_solution( state_t* init_state  ){
                     selectionPos.x = xPos;
                     selectionPos.y = yPos;
                     if(can_apply(&(n->state), &selectionPos, action)) {
+                        // store every change in a graph node.
                         new_Node = applyAction(n, &selectionPos,action);
                         graph_node_list = insert_graph_node(new_Node, graph_node_list);
                         generated_nodes++;
 
                         if(won( &(new_Node->state) )) {
+                            // won: only 1 peg left.
                             save_solution(new_Node);
                             remainingPegs = num_pegs(&(new_Node->state));
                             ht_destroy(&table);
-                            listFree(graph_node_list);
                             return;
                         }
-
+                        //if hashtable no record of this field, push it into the stack
                         if(!ht_contains(&table, new_Node->state.field)) {
                             stack_push(new_Node);
+                            // insert record in hashtable
                             ht_insert(&table, new_Node->state.field, n->state.field);
                         }
 
@@ -136,7 +143,6 @@ void find_solution( state_t* init_state  ){
 
 	    if(exploredNodes >= budget) {
             ht_destroy(&table);
-            listFree(graph_node_list);
 	        return;
 	    }
 

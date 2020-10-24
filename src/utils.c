@@ -346,6 +346,10 @@ void play_solution(){
     }
 }
 
+/*
+ * linked list contains address to all graph nodes.
+ * used for free them
+*/
 node_list_t *insert_graph_node(node_t* node, node_list_t* list) {
     if(list == NULL) {
         node_list_t* new_node = (node_list_t*) malloc(sizeof(node_list_t));
@@ -367,7 +371,6 @@ node_list_t *insert_graph_node(node_t* node, node_list_t* list) {
 *  free linked list.
 */
 void listFree(node_list_t* head) {
-
     node_list_t* p;
     while (head != NULL) {
         p = head;

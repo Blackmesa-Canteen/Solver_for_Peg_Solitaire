@@ -118,8 +118,8 @@ int main(int argc, char *argv[]) {
 		printf("\tExpanded/seconds: %d\n", (int)(expanded_nodes/cpu_time_used) );
 		printf("\tTime (seconds): %f\n", cpu_time_used );
 
-	
 
+        listFree(graph_node_list);
 		setBufferedInput(true);
 		printf("\033[?25h\033[0m");
 		return EXIT_SUCCESS;
