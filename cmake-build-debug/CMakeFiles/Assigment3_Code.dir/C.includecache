@@ -6,13 +6,23 @@
 
 #IncludeRegexTransform: 
 
-/Users/shaotienlee/Desktop/Courses/DATA_STRUCTURE/Assginment/Assginment3/Assigment3_Code/src/layouts.h
+/Users/shaotienlee/Desktop/Courses/DATA_STRUCTURE/Assginment/Assginment3/Assigment3_Code/peg_solitaire.c
+src/utils.h
+/Users/shaotienlee/Desktop/Courses/DATA_STRUCTURE/Assginment/Assginment3/Assigment3_Code/src/utils.h
+src/ai.h
+/Users/shaotienlee/Desktop/Courses/DATA_STRUCTURE/Assginment/Assginment3/Assigment3_Code/src/ai.h
+stdio.h
+-
+time.h
+-
 
-/Users/shaotienlee/Desktop/Courses/DATA_STRUCTURE/Assginment/Assginment3/Assigment3_Code/src/utils.c
+/Users/shaotienlee/Desktop/Courses/DATA_STRUCTURE/Assginment/Assginment3/Assigment3_Code/src/ai.h
+stdint.h
+-
+unistd.h
+-
 utils.h
 /Users/shaotienlee/Desktop/Courses/DATA_STRUCTURE/Assginment/Assginment3/Assigment3_Code/src/utils.h
-layouts.h
-/Users/shaotienlee/Desktop/Courses/DATA_STRUCTURE/Assginment/Assginment3/Assigment3_Code/src/layouts.h
 
 /Users/shaotienlee/Desktop/Courses/DATA_STRUCTURE/Assginment/Assginment3/Assigment3_Code/src/utils.h
 stdio.h
