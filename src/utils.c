@@ -353,6 +353,7 @@ void play_solution(){
 node_list_t *insert_graph_node(node_t* node, node_list_t* list) {
     if(list == NULL) {
         node_list_t* new_node = (node_list_t*) malloc(sizeof(node_list_t));
+        if (new_node == NULL) exit(1);
         new_node->graphNode = node;
         new_node->next = NULL;
         return new_node;
@@ -360,6 +361,7 @@ node_list_t *insert_graph_node(node_t* node, node_list_t* list) {
 
     node_list_t* head = list;
     node_list_t* new_node = (node_list_t*) malloc(sizeof(node_list_t));
+    if (new_node == NULL) exit(1);
 
     new_node->graphNode = node;
     new_node->next = head;

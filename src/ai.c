@@ -36,6 +36,7 @@ void save_solution( node_t* solution_node ){
 
 node_t* create_init_node( state_t* init_state ){
 	node_t * new_n = (node_t *) malloc(sizeof(node_t));
+    if (new_n == NULL) exit(1);
 	new_n->parent = NULL;	
 	new_n->depth = 0;
 	copy_state(&(new_n->state), init_state);
@@ -52,6 +53,7 @@ node_t* applyAction(node_t* n, position_s* selected_peg, move_t action ){
 	//FILL IN MISSING CODE
 	//allocate space for the new node
 	new_node = (node_t*) malloc(sizeof(node_t));
+    if (new_node == NULL) exit(1);
 	//points to parent
 	new_node->parent = n;
     //copy the resent state: field and cursor

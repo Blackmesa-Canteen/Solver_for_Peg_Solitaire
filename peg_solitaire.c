@@ -111,8 +111,9 @@ int main(int argc, char *argv[]) {
 
         FILE *fp;
         fp = fopen("output.txt","w");
+        if (!fp) printf("open output.txt error !\n");
 
-		printf("SOLUTION:                               \n");
+        printf("SOLUTION:                               \n");
 		print_solution( );
 		printf("STATS: \n");
 		printf("\tExpanded nodes: %'d\n\tGenerated nodes: %'d\n", expanded_nodes, generated_nodes);
@@ -122,11 +123,11 @@ int main(int argc, char *argv[]) {
 		printf("\tTime (seconds): %f\n", cpu_time_used );
 
 		fprintf(fp, "STATS: \n");
-        fprintf(fp, "\tExpanded nodes: %'d\n\tGenerated nodes: %'d\n", expanded_nodes, generated_nodes);
-        fprintf(fp, "\tSolution Length: %d\n", solution_size);
-        fprintf(fp, "\tNumber of Pegs Left: %d\n", num_pegs( &(solution[solution_size]) ) );
-        fprintf(fp, "\tExpanded/seconds: %d\n", (int)(expanded_nodes/cpu_time_used) );
-        fprintf(fp, "\tTime (seconds): %f\n", cpu_time_used );
+        fprintf(fp, "Expanded nodes: %'d\nGenerated nodes: %'d\n", expanded_nodes, generated_nodes);
+        fprintf(fp, "Solution Length: %d\n", solution_size);
+        fprintf(fp, "Number of Pegs Left: %d\n", num_pegs( &(solution[solution_size]) ) );
+        fprintf(fp, "Expanded/seconds: %d\n", (int)(expanded_nodes/cpu_time_used) );
+        fprintf(fp, "Time (seconds): %f\n", cpu_time_used );
 
 
         fclose(fp);
